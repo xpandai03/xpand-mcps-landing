@@ -160,26 +160,37 @@ function HeroOrbitDeck() {
   }, []);
 
   useEffect(() => {
+    // Immediately show content on mobile or if no ref
     if (!sectionRef.current || typeof window === "undefined") {
       setVisible(true);
       return;
     }
 
     const node = sectionRef.current;
+
+    // Fallback timeout to ensure content shows (especially on mobile)
+    const fallbackTimeout = setTimeout(() => {
+      setVisible(true);
+    }, 100);
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setVisible(true);
+            clearTimeout(fallbackTimeout);
             observer.disconnect();
           }
         });
       },
-      { threshold: 0.2 }
+      { threshold: 0.05, rootMargin: "50px" } // Lower threshold and add margin for better mobile detection
     );
 
     observer.observe(node);
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      clearTimeout(fallbackTimeout);
+    };
   }, []);
 
   const toggleTheme = () => {

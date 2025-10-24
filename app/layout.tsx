@@ -1,9 +1,16 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
+};
+
 export const metadata: Metadata = {
-  title: "Hero Orbit Deck",
-  description: "Monochrome hero component with orbital animations",
+  title: "MCP Launch Deck | AI Command Deck for Precision Automation",
+  description: "Build framework for ChatGPT Apps and MCP integrations that turn workflows into AI-powered systems. We connect your stack, automate key actions, and ship real apps.",
 };
 
 export default function RootLayout({
