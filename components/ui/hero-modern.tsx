@@ -114,6 +114,7 @@ function HeroOrbitDeck() {
   const [theme, setTheme] = useThemeSync();
   const [visible, setVisible] = useState(false);
   const [mode, setMode] = useState("strategy");
+  const [videoReady, setVideoReady] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -460,14 +461,50 @@ function HeroOrbitDeck() {
 
           <figure className="order-1 overflow-hidden rounded-[32px] border transition xl:order-2" style={{ position: "relative" }}>
             <div className="relative w-full pb-[120%] sm:pb-[90%] lg:pb-[72%]">
-              <img
-                src={showcaseImage.src}
-                alt={showcaseImage.alt}
-                loading="lazy"
-                className="absolute inset-0 h-full w-full object-cover grayscale transition duration-700 ease-out hover:scale-[1.03]"
-              />
-              <span className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/50 mix-blend-soft-light dark:from-white/10" />
-              <div className="pointer-events-none absolute inset-0 border border-white/10 mix-blend-overlay dark:border-white/20" />
+              {/* Loom Video Embed */}
+              <div className="absolute inset-0 h-full w-full grayscale hover:grayscale-0 transition duration-700">
+                <iframe
+                  src="https://www.loom.com/embed/c5704feffc6d48498d1f121e5831b530?sid=3d195fc2-a590-4842-a6e1-49c166d2f69f&hideEmbedTopBar=true"
+                  frameBorder="0"
+                  allowFullScreen
+                  className="absolute inset-0 h-full w-full"
+                  style={{ pointerEvents: videoReady ? 'auto' : 'none' }}
+                />
+              </div>
+
+              {/* Click-to-Play Overlay */}
+              {!videoReady && (
+                <button
+                  onClick={() => setVideoReady(true)}
+                  className="absolute inset-0 z-10 flex items-center justify-center bg-black/20 backdrop-blur-[1px] transition-opacity duration-500 hover:bg-black/30 group cursor-pointer"
+                  aria-label="Click to enable video playback"
+                >
+                  <div className="flex flex-col items-center gap-4">
+                    <div className="rounded-full bg-white/90 p-6 transition-transform duration-300 group-hover:scale-110 dark:bg-white/80">
+                      <svg
+                        className="h-12 w-12 text-black"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M8 5v14l11-7z" />
+                      </svg>
+                    </div>
+                    <span className="text-sm font-semibold uppercase tracking-[0.3em] text-white drop-shadow-lg">
+                      Click to Play
+                    </span>
+                  </div>
+                </button>
+              )}
+
+              {/* Visual Overlays - Only show when video not ready */}
+              {!videoReady && (
+                <>
+                  <span className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/50 mix-blend-soft-light dark:from-white/10" />
+                  <div className="pointer-events-none absolute inset-0 border border-white/10 mix-blend-overlay dark:border-white/20" />
+                </>
+              )}
+
+              {/* Animated Orbital Elements - Always visible */}
               <span className="pointer-events-none absolute -left-16 top-16 h-40 w-40 rounded-full border border-white/15 opacity-70 motion-safe:animate-[hero3-glow_9s_ease-in-out_infinite]" />
               <span className="pointer-events-none absolute -right-12 bottom-16 h-48 w-48 rounded-full border border-white/10 opacity-40 motion-safe:animate-[hero3-drift_12s_ease-in-out_infinite]" />
             </div>
