@@ -660,12 +660,14 @@ function HeroOrbitDeck() {
             <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl max-w-2xl">
               Ready to deploy your AI Command Deck?
             </h2>
-            <button
-              type="button"
-              className="rounded-full bg-white px-8 py-4 text-sm font-semibold uppercase tracking-[0.35em] text-black transition duration-500 hover:scale-105 dark:bg-white/90"
+            <a
+              href="https://calendly.com/raunek-xpandai/new-meeting"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-full bg-white px-8 py-4 text-sm font-semibold uppercase tracking-[0.35em] text-black transition duration-500 hover:scale-105 dark:bg-white/90 inline-block text-center"
             >
               Book Your Build Call
-            </button>
+            </a>
           </div>
         </div>
       </section>
